@@ -63,7 +63,7 @@ echo_header($user_data);
 
                 <div class="following-user">
                     <div class="following-user-name"><?php echo $follower_user_data['name']; ?></div>
-                    <a href="/api/follow?user=<?php echo $follower_user_id; ?>&redirect_url=<?php echo $location_url; ?>">
+                    <a href="/api/follow?type=user&user=<?php echo $follower_user_id; ?>&redirect_url=<?php echo $location_url; ?>">
                         <?php echo in_array($follower_user_id, $following) ? "フォロー解除" : "フォロー" ?>
                     </a>
                 </div>

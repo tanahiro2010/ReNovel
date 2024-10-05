@@ -353,7 +353,8 @@ class Novel
             'status' => 'private',
             'last_update' => date("Y-m-d H:i:s"),
 
-            'totalPoint' => 0,
+            'watch' => array(),
+            'totalPoint' => array(),
             'followers' => array()
         );
 
@@ -594,6 +595,61 @@ class Novel
     }
 
     /**
+     * @param $novel_id
+     * @return int|mixed
+     */
+
+    public function get_watch($novel_id)
+    {
+        $database = $this->load();
+
+        return $database['novel'][$novel_id]['watch'] ?? 0;
+    }
+
+    /**
+     * @param string $user_id
+     * @param string $novel_id
+     * @return int
+     */
+
+    public function add_watch(string $user_id, string $novel_id)
+    {
+        $database = $this->load();
+
+        if (isset($database['novel'][$novel_id])) {
+            if (in_array($user_id, $database['novel'][$novel_id]['watch'])) {
+                $database['novel'][$novel_id]['watch'][] = $user_id;
+            }
+        }
+
+        $this->save($database);
+
+        return count($database['novel'][$novel_id]['watch']);
+    }
+
+    public function get_novels()
+    {
+        $database = $this->load();
+        return $database['novel'];
+    }
+
+    public function follow_novel($user_id, $novel_id)
+    {
+        if (in_array($novel_id, $this->Account->fetch($user_id, 'follow-novel'))) {
+            $this->Account->appendArray($user_id, 'follow-novel', $novel_id);
+            return true;
+        } else {
+            $this->Account->deleteArrayFromValue($user_id, 'follow-novel', $novel_id);
+            return false;
+        }
+    }
+
+    public function isFollow($user_id, $novel_id)
+    {
+        return in_array($novel_id, $this->Account->fetch($user_id, 'follow-novel'));
+    }
+
+    /**
      * @param string $novel_id
      * @return mixed|null
      */
@@ -678,11 +734,7 @@ function convertHashtagsToLinks($text)
 
 function all_convert($text)
 {
-    return convertHashtagsToLinks(
-        convertUrlsToLinks(
-            convertMentionsToLinks($text)
-        )
-    );
+    return str_replace("\n", "<br>", convertUrlsToLinks($text));
 }
 
 function extractHashtags($text) {

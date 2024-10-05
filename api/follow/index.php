@@ -1,6 +1,7 @@
 <?php
 require_once '../../functions/app.php';
 $Account = new DataBase('../../db/database.json', 'novel');
+$Novel = new Novel('../../db/database.json', 'novel');
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $user_data = $Account->isLogin();
@@ -33,8 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
                 case 'novel':
                     if (isset($_GET['novel'])) {
+                        $user_id = $user_data['id'];
+                        $target_novel = $_GET['novel'];
 
+                        $Novel->follow_novel($user_id, $target_novel);
                     }
+                    break;
             }
         }
 

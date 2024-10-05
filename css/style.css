@@ -1,0 +1,305 @@
+/* General Styling */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #555;
+}
+
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.header {
+    background-color: #8eaec9;
+    color: #f7f9fb;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.header .site-title {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.header .site-description {
+    font-size: 1.1rem;
+    margin-top: 5px;
+    color: #e8eff7;
+}
+
+/* Account Section */
+.account {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.account a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #7b99b5;
+    color: #f7f9fb;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.account a:hover {
+    background-color: #5a77a2;
+    text-decoration: none;
+}
+/* Styles specific to login or register forms */
+.login-form,
+.register-form {
+    width: 350px;
+    margin: 60px auto;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"],
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+    width: calc(100% - 24px); /* Ensures input fits within form */
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    background-color: #f7f9fb;
+}
+
+.login-form button[type="submit"],
+.register-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #8eaec9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.login-form button[type="submit"]:hover,
+.register-form button[type="submit"]:hover {
+    background-color: #7b99b5;
+}
+
+
+
+/* User Data Section */
+.user-data {
+    background-color: #f0f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-data .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.user-data .section-description {
+    font-size: 1.1rem;
+    color: #777;
+}
+
+/* Novel Section */
+.my-novel, .follow-novel, .follow-controller {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 1.6rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.link-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: #7b99b5;
+    color: #f7f9fb;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.link-button:hover {
+    background-color: #5a77a2;
+}
+
+/* Follow Section */
+.list-follow {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.following-user {
+    background-color: #f0f4f9;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.following-user .following-user-name {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.following-user a {
+    color: #7b99b5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.following-user a:hover {
+    text-decoration: underline;
+}
+
+
+/* Error Section */
+/* Error Section - Notification Style */
+.error {
+    background-color: #ffdddd;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 400px;
+    margin: 0 auto 20px auto; /* Center the notification */
+    font-size: 0.9rem;
+    position: fixed; /* Fix position to the top */
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; /* Ensure it's on top */
+    transition: opacity 0.3s ease;
+    opacity: 0.9; /* Slight transparency */
+}
+
+.error-title {
+    font-size: 1rem;
+    color: #d8000c;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.error-description {
+    font-size: 0.9rem;
+    color: #d8000c;
+}
+
+.error-close {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #d8000c;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.error-close:hover {
+    color: #a70000;
+}
+
+/* Create Novel Form */
+.create-novel-form {
+    background-color: #f0f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.create-novel-form .section-title {
+    font-size: 1.8rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.create-novel-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.create-novel input[type="text"],
+.create-novel textarea,
+.create-novel select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.create-novel textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.create-novel .submit {
+    background-color: #7b99b5;
+    color: #f7f9fb;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-novel .submit:hover {
+    background-color: #5a77a2;
+}
+
+.novel-text-form {
+    height: 469px;
+}
+/* Short Text Area (optional for short novels) */
+
+#type[value="short"] ~ #short-text {
+    display: block;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #8eaec9;
+    color: #f7f9fb;
+    font-size: 0.9rem;
+}

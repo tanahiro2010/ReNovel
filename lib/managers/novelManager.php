@@ -21,7 +21,7 @@ class NovelManager
             return null;
         }
         $data = [
-            'id' => uniqid(),
+            'id' => uniqid("novel_"),
             'title' => $title,
             'author' => $author,
             'genre' => $genre,

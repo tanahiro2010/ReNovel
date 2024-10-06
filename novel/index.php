@@ -9,8 +9,6 @@ $user_data = $Account->isLogin();
 
 echo_header($user_data);
 
-$mode = "list";
-
 $novel_id = null;
 $author_id = null;
 
@@ -105,11 +103,21 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
         ?>
 
-        <section class="follow-novel">
-            <a href="/api/follow?type=novel&novel=<?php echo $novel_id; ?>&redirect_url=<?php echo getCurrentURL(); ?>" class="link-button">
-                <?php echo $Novel->isFollow($user_data['id'], $novel_id) ? 'フォロー解除' : 'フォロー'; ?>
-            </a>
-        </section>
+        <?php if ($user_data): ?>
+
+            <section class="follow-novel">
+                <a href="/api/follow?type=novel&novel=<?php echo $novel_id; ?>&redirect_url=<?php echo getCurrentURL(); ?>" class="link-button">
+                    <?php echo $Novel->isFollow($user_data['id'], $novel_id) ? 'フォロー解除' : 'フォロー'; ?>
+                </a>
+            </section>
+
+        <?php else: ?>
+
+            <section class="follow-novel">
+                <a href="/login" class="link-button">ログインしてフォロー機能を解除しよう</a>
+            </section>
+
+        <?php endif; ?>
 
         <?php
         echo '</main>';

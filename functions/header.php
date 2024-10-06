@@ -4,7 +4,7 @@
  * @param string $mode
  * @return void
  */
-function echo_header($user, $mode = "default")
+function echo_header($user)
 {
     ?>
 
@@ -34,9 +34,6 @@ function echo_header($user, $mode = "default")
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-
-    <?php
-    if ($mode == "default"){ ?>
         <header>
             <div class="header">
                 <a href="/">
@@ -48,6 +45,9 @@ function echo_header($user, $mode = "default")
             </div>
 
             <div class="account">
+                <a href="/search">
+                    検索
+                </a>
                 <?php if ($user): // ログインしているなら
                     $user_name = $user['name'];
                     ?>
@@ -64,9 +64,5 @@ function echo_header($user, $mode = "default")
             </div>
         </header>
     <?php
-    } elseif ($mode == "show_novel"){ ?>
-
-    <?php
-    }
 }
 ?>

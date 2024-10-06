@@ -184,7 +184,7 @@ class DataBase
         $database = $this->load();
 
         if (isset($database['user'][$userId])) {
-            $database['user'][$userId][$key][] = $value;
+            array_unshift($database['user'][$userId][$key], $value);
 
             $this->save($database);
 
@@ -364,7 +364,9 @@ class Novel
             $novelObj['text'] = htmlspecialchars($text);
         }
 
-        $database['novel'][$novel_id] = $novelObj;
+        $new_entry = array($novel_id => $novelObj);
+        $database['novel'] = $new_entry + $database['novel'];
+
         $this->save($database);
         $this->Account->appendArray($author_id, 'my_novel', $novel_id);
 
@@ -617,7 +619,7 @@ class Novel
         $database = $this->load();
 
         if (isset($database['novel'][$novel_id])) {
-            if (in_array($user_id, $database['novel'][$novel_id]['watch'])) {
+            if (!in_array($user_id, $database['novel'][$novel_id]['watch'])) {
                 $database['novel'][$novel_id]['watch'][] = $user_id;
             }
         }

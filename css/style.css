@@ -393,13 +393,92 @@ footer {
     color: #555;
     line-height: 1.6;
 }
-/* Main Novel List Section */
+/* Main User Profile Section */
+.show-user-content {
+    background-color: #f0f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.show-user-content .section-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.display_user_id {
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 5px;
+    padding: 5px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Main Search Form Section */
+.novel-search-form {
+    background-color: #f9fafc;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.novel-search-form .section-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+}
+
+.search-form button.submit {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-form button.submit:hover {
+    background-color: #0056b3;
+}
+
+/* Novels Section */
 .novels {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
     background-color: #f5f7fa;
+    margin-top: 30px;
+}
+
+.novels .section-title {
+    flex-basis: 100%;
+    font-size: 1.8rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 /* Individual Novel Block */
@@ -408,9 +487,9 @@ footer {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    width: 300px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    width: calc(33.333% - 20px); /* Responsive grid layout */
     cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .show-novel-block:hover {
@@ -418,25 +497,42 @@ footer {
     background-color: #f0f4f9;
 }
 
-/* Novel Title */
+/* Novel Title Styling */
 .novel-title {
     font-size: 1.6rem;
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-/* Novel Description */
+/* Novel Description Styling */
 .novel-description {
     font-size: 1.1rem;
     color: #555;
     margin-bottom: 15px;
     line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit text to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-/* Novel Update Date */
+/* Novel Metrics */
+.novel-watch,
+.novel-point,
 .novel-update-date {
     font-size: 0.9rem;
     color: #888;
-    text-align: right;
+    margin-bottom: 8px;
+}
+
+.novel-watch::before {
+    content: '👀 '; /* Eye icon */
+}
+
+.novel-point::before {
+    content: '⭐ '; /* Star icon */
 }

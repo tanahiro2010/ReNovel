@@ -23,6 +23,14 @@ echo_header($userData);
                         <?php echo substr($novel_data['description'], 0, 20); ?>
                     </div>
 
+                    <div class="novel-watch">
+                        <?php echo count($novel_data['watch']); ?>回講読
+                    </div>
+
+                    <div class="novel-point">
+                        <?php echo count($novel_data['followers']); ?>ポイント
+                    </div>
+
                     <div class="novel-update-date">
                         <?php echo $novel_data['last_update']; ?>
                     </div>

@@ -64,7 +64,7 @@ echo_header($user_data);
                 ?>
 
                 <div class="following-user">
-                    <div class="following-user-name"><?php echo $following_user_data['name']; ?></div>
+                    <div class="following-user-name" onclick="location.href = '/@<?php echo $following_user_id; ?>'"><?php echo $following_user_data['name']; ?></div>
                     <a href="/api/follow?type=user&user=<?php echo $following_user_id; ?>&redirect_url=<?php echo $location_url; ?>">フォロー解除</a>
                 </div>
 

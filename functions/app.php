@@ -633,15 +633,34 @@ class Novel
         return $database['novel'];
     }
 
-    public function follow_novel($user_id, $novel_id)
+    /**
+     * @param string $user_id
+     * @param string $novel_id
+     * @return bool
+     */
+    public function follow_novel(string $user_id, string $novel_id)
     {
+        $mode = "follow";
         if (in_array($novel_id, $this->Account->fetch($user_id, 'follow-novel'))) {
-            $this->Account->appendArray($user_id, 'follow-novel', $novel_id);
-            return true;
-        } else {
             $this->Account->deleteArrayFromValue($user_id, 'follow-novel', $novel_id);
-            return false;
+            $mode = "unfollow";
+        } else {
+            $this->Account->appendArray($user_id, 'follow-novel', $novel_id);
+            $mode = "follow";
         }
+
+        $database = $this->load();
+        $ret = false;
+        if ($mode == "unfollow") {
+            $database['novel'][$novel_id]['followers'] = $this->delete($database['novel'][$novel_id]['followers'], $user_id);
+        } else {
+            $database['novel'][$novel_id]['followers'][] = $user_id;
+            $ret = true;
+        }
+
+        $this->save($database);
+        return $ret;
+
     }
 
     public function isFollow($user_id, $novel_id)

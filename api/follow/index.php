@@ -37,7 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         $user_id = $user_data['id'];
                         $target_novel = $_GET['novel'];
 
-                        $Novel->follow_novel($user_id, $target_novel);
+                        $result = $Novel->follow_novel($user_id, $target_novel);
+                        if ($result) {
+
+                        }
                     }
                     break;
             }

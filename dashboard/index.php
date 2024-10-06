@@ -3,7 +3,10 @@ require_once '../functions/app.php';
 require_once '../functions/header.php';
 
 $Account = new DataBase('../db/database.json', 'novel');
+$Novel = new Novel('../db/database.json', 'novel');
 $user_data = $Account->isLogin();
+
+$location_url = getCurrentURL(); // 現在のサイトのURL
 
 if (!$user_data) { // ログインしてなかったら
     header('Location: /login');
@@ -31,6 +34,22 @@ echo_header($user_data);
 
     <section class="follow-novel">
         <h2 class="section-title">フォローしている小説</h2>
+        <div class="list-follow">
+            <?php
+            $following_novels = $user_data['follow-novel'];
+            foreach ($following_novels as $novel_id):
+                $novel_data = $Novel->fetch_novel($novel_id);
+                ?>
+
+                <div class="following-user">
+                    <div class="following-user-name"><?php echo $novel_data['title']; ?></div>
+                    <a href="/api/follow?type=novel&novel=<?php echo $novel_id; ?>&redirect_url=<?php echo $location_url; ?>">
+                        フォロー解除
+                    </a>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
     </section>
 
     <section class="follow-controller">
@@ -40,14 +59,13 @@ echo_header($user_data);
         <div class="list-follow">
             <?php
             $following = $user_data['following'];
-            $location_url = getCurrentURL();
             foreach ($following as $following_user_id):
                 $following_user_data = $Account->in_account($following_user_id);
                 ?>
 
                 <div class="following-user">
                     <div class="following-user-name"><?php echo $following_user_data['name']; ?></div>
-                    <a href="/api/follow?user=<?php echo $following_user_id; ?>&redirect_url=<?php echo $location_url; ?>">フォロー解除</a>
+                    <a href="/api/follow?type=user&user=<?php echo $following_user_id; ?>&redirect_url=<?php echo $location_url; ?>">フォロー解除</a>
                 </div>
 
             <?php endforeach; ?>

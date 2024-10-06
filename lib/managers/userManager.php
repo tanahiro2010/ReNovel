@@ -17,11 +17,11 @@ class UserManager
      * @param string $password The password for the user account.
      * @return array An array containing the registered user data, or an empty array if the user already exists.
      */
-    public function create($id, $name, $mail, $password): User
+    public function create($id, $name, $mail, $password): ?User
     {
         $account = new JsonDB('../db/user.json');
         if ($this->exists(['id' => $id])) {
-            return [];
+            return;
         }
 
         $data = [

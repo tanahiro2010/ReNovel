@@ -2,12 +2,29 @@
 require_once './db.php';
 class User
 {
-    public $id;
-    public $name;
-    public $mail;
-    public $password;
-    public $followers;
-    public $following;
+    public string $Id;
+    public string $Name;
+    public string $Mail;
+    public string $Password;
+    public array $Followers;
+    public array $Following;
+
+    private JsonDB $DataBase;
+
+    private $isConstructed = false;
+
+    public function __set($name, $value)
+    {
+        if (property_exists($this, $name)) {
+            if ($this->isConstructed) {
+                $this->UpdateAt = date('Y-m-d H:i:s');
+                $this->patchUser();
+            }
+            $this->$name = $value;
+        } else {
+            trigger_error("Undefined property: " . __CLASS__ . "::$name", E_USER_NOTICE);
+        }
+    }
 
     /**
      * Constructor for the User class.
@@ -22,8 +39,9 @@ class User
      * @param array $followers List of followers.
      * @param array $following List of users being followed.
      */
-    public function __construct($id = null, $name = null, $mail = null, $password = null, $followers = [], $following = [])
+    public function __construct(string|object|array $id)
     {
+        $this->DataBase = new JsonDB('../db/user.json');
         if (is_array($id)) {
             $this->id = $id['id'];
             $this->name = $id['name'];
@@ -31,13 +49,31 @@ class User
             $this->password = $id['password'];
             $this->followers = $id['followers'];
             $this->following = $id['following'];
-        } else {
-            $this->id = $id;
-            $this->name = $name;
-            $this->mail = $mail;
-            $this->password = $password;
-            $this->followers = $followers;
-            $this->following = $following;
         }
+        if (is_string($id)) {
+            $this->id = $id;
+        }
+        if (is_object($id)) {
+            $this->id = $id->id;
+            $this->name = $id->name;
+            $this->mail = $id->mail;
+            $this->password = $id->password;
+            $this->followers = $id->followers;
+            $this->following = $id->following;
+        }
+        $this->isConstructed = true;
+    }
+    private function patchUser()
+    {
+        $index = $this->DataBase->fetchWithIndex(
+            function ($data) use ($this) {
+                return $data['id'] == $this->Id;
+            }
+        );
+        if ($index) {
+            $this->DataBase->update($index[0]['index'], $this);
+            return;
+        }
+        return;
     }
 }

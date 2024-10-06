@@ -12,7 +12,7 @@ class UserManager
      * @param string $password The password for the user account.
      * @return array An array containing the registered user data, or an empty array if the user already exists.
      */
-    public function register($id, $name, $mail, $password): User
+    public function create($id, $name, $mail, $password): User
     {
         $account = new JsonDB('../db/user.json');
         if ($this->exists(['id' => $id])) {
@@ -53,5 +53,28 @@ class UserManager
         };
         $result = $account->fetch($idFilter);
         return count($result) > 0;
+    }
+
+    /**
+     * Deletes a user from the database based on the provided target.
+     *
+     * @param array $target The target user data containing at least an 'id' key.
+     * @return null Always returns null.
+     */
+    public delete($target): null
+    {
+        $idFilter = function ($callbackData) use ($target): bool {
+            if ($callbackData['id'] === $target['id']) {
+                return true;
+            }
+            return false;
+        };
+        $targetData = $this->DataBase->fetchWithIndex($idFilter);
+        if ($targetData) {
+            foreach ($targetData as $data) {
+                $this->DataBase->delete($data['index']);
+            }
+        }
+        return null;
     }
 }

@@ -3,6 +3,11 @@ require_once '../db.php';
 require_once '../user.php';
 class UserManager
 {
+    private $DataBase;
+    public function __construct()
+    {
+        $this->DataBase = new JsonDB('../db/user.json');
+    }
     /**
      * Registers a new user with the provided details.
      *
@@ -55,13 +60,7 @@ class UserManager
         return count($result) > 0;
     }
 
-    /**
-     * Deletes a user from the database based on the provided target.
-     *
-     * @param array $target The target user data containing at least an 'id' key.
-     * @return null Always returns null.
-     */
-    public delete($target): null
+    public function delete($target): null
     {
         $idFilter = function ($callbackData) use ($target): bool {
             if ($callbackData['id'] === $target['id']) {

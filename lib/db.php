@@ -147,6 +147,26 @@ class JsonDB {
         $data = $this->readData();
         return array_filter($data, $callback);
     }
+    /**
+     * Retrieves a record along with its index based on a specified condition.
+     *
+     * This method reads the current data and searches for the first record that matches
+     * the provided callback function. The callback function should accept a record as its
+     * parameter and return true if the record matches the condition, or false otherwise.
+     *
+     * @param callable $callback The callback function to use for searching the record.
+     * @return array An array containing the index and the record that matches the specified condition.
+     * @throws Exception If no matching record is found.
+     */
+    public function fetchWithIndex(callable $callback) {
+        $data = $this->readData();
+        foreach ($data as $index => $record) {
+            if ($callback($record)) {
+                return ['index' => $index, 'record' => $record];
+            }
+        }
+        throw new Exception("Record not found.");
+    }
 
     /**
      * Retrieves all records from the database.

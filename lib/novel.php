@@ -109,14 +109,9 @@ class Novel
             $this->Star = $initalizeData['star'];
             $this->Watch = $initalizeData['watch'];
         }
+        $this->isConstructed = true;
     }
     /**
-     * @param string $novel_id
-     * @param string|null $title
-     * @param string|null $description
-     * @param string $statue
-     * @param string|null $text
-     * @param string|null $tags
      * @return mixed|null
      */
     private function patchNovel()

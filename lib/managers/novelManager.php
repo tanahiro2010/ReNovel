@@ -15,21 +15,25 @@ class NovelManager
         $this->DataBase = new JsonDB('../../db/novel.json');
     }
 
-    public function create($id, $title, $author, $genre, $status, $rating, $description): ?Novel
+    public function create($title, $author, $genre, $description): ?Novel
     {
         if ($this->exists(['id' => $id])) {
             throw new Exception('Novel already exists.');
         }
 
         $data = [
-            'id' => $id,
+            'id' => uniqid(),
             'title' => $title,
             'author' => $author,
             'genre' => $genre,
-            'status' => $status,
-            'rating' => $rating,
+            'status' => 'ongoing',
+            'rating' => 0,
             'description' => $description,
             'comments' => [],
+            'updateAt' => date('Y-m-d H:i:s'),
+            'startAt' => date('Y-m-d H:i:s'),
+            'visibility' => 'private',
+            'type' => 'long',
         ];
         $this->DataBase->insert($data);
         return new Novel($data);

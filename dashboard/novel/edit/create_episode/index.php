@@ -14,7 +14,7 @@ if (!$user_data) {
 
 $novel_id = $_SESSION['edit_novel_id'];
 $novel_data = $Novel->fetch_novel($novel_id);
-if ($Novel->fetch_novel($novel_id)) {
+if ($novel_data) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['title']) && isset($_POST['text'])) {
             $episode_id = $Novel->uploadEpisode($novel_id, $_POST['title'], $_POST['text']);
@@ -23,7 +23,7 @@ if ($Novel->fetch_novel($novel_id)) {
         } else {
             header('Location: ./?error=required');
         }
-    } elseif (!$_SERVER['REQUEST_METHOD'] == 'GET') {
+    } elseif ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         header('Location: /');
         exit();
     }
@@ -35,25 +35,27 @@ if ($Novel->fetch_novel($novel_id)) {
 echo_header($user_data);
 ?>
 
-<main>
-    <section class="control_novel">
-        <h2 class="section-title">小説: <a href="../?novel=<?php echo $novel_id; ?>" class="default-text"><?php echo $novel_data['title']; ?></a></h2>
+<main class="p-4">
+    <section class="control_novel mb-6">
+        <h2 class="section-title text-2xl font-bold mb-2">
+            小説: <a href="../?novel=<?php echo $novel_id; ?>" class="text-blue-600 hover:underline"><?php echo $novel_data['title']; ?></a>
+        </h2>
         <div class="section-description">
             <?php echo all_convert($novel_data['description']); ?>
         </div>
     </section>
 
-    <section class="create-novel-form">
-        <h2 class="section-title">新規エピソードを作成</h2>
+    <section class="create-novel-form mb-6">
+        <h2 class="section-title text-xl font-semibold mb-2">新規エピソードを作成</h2>
         <form action="./" method="post" class="create-novel">
-            <label class="create-novel-label">
+            <label class="block mb-2">
                 エピソードタイトル:
-                <input type="text" name="title" placeholder="タイトル" value="第<?php echo count($novel_data['episodes']) + 1; ?>話" required>
+                <input type="text" name="title" placeholder="タイトル" value="第<?php echo count($novel_data['episodes']) + 1; ?>話" required class="border rounded p-2 w-full">
             </label>
 
-            <label for="text" class="create-novel-label">本文</label>
-            <textarea class="novel-text-form" name="text" placeholder="本文" required></textarea>
-            <button type="submit" class="submit">作成</button>
+            <label for="text" class="block mb-2">本文</label>
+            <textarea class="novel-text-form border rounded p-2 w-full" name="text" placeholder="本文" required></textarea>
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">作成</button>
         </form>
     </section>
 </main>

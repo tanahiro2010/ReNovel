@@ -24,8 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($result) {
             header('Location: /');
+            exit();
         } else {
             header('Location: ./?error=account');
+            exit();
         }
     }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -43,30 +45,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // ログインしていないなら
 echo_header($user_data); // ヘッダー出力
 ?>
+
 <?php if ($error): ?>
-    <section class="error">
-        <h2 class="error-title"><?php echo $error_title; ?></h2>
+    <section class="error bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4">
+        <h2 class="error-title text-lg font-bold"><?php echo $error_title; ?></h2>
         <div class="error-description"><?php echo $error_content; ?></div>
-        <button class="error-close" onclick="this.parentElement.style.display='none';">×</button>
+        <button class="error-close mt-2 text-red-500" onclick="this.parentElement.style.display='none';">×</button>
     </section>
 <?php endif; ?>
 
-<section class="login-box">
+<section class="login-box p-6 max-w-md mx-auto bg-white shadow-md rounded">
     <form action="./" method="post" class="login-form">
-        <h2 class="section-title">ログイン</h2>
-        <label class="label-login">
+        <h2 class="section-title text-2xl font-bold mb-4">ログイン</h2>
+        <label class="label-login block mb-2">
             ID:
-            <input type="text" name="id" placeholder="ID" required>
-        </label><br>
+            <input type="text" name="id" placeholder="ID" required class="border rounded p-2 w-full">
+        </label>
 
-        <label class="label-login">
+        <label class="label-login block mb-4">
             Password:
-            <input type="password" name="password" placeholder="Password" required>
-        </label><br>
+            <input type="password" name="password" placeholder="Password" required class="border rounded p-2 w-full">
+        </label>
 
-        <button type="submit" class="submit">ログイン</button><br>
+        <button type="submit" class="submit bg-blue-500 text-white py-2 px-4 rounded">ログイン</button>
 
-        <a href="/register" class="big-text">登録しますか？</a><br>
-        <a href="./forget_password" class="mini-text">パスワードを忘れた場合</a><br>
+        <div class="mt-4">
+            <a href="/register" class="text-blue-600 hover:underline">登録しますか？</a><br>
+            <a href="./forget_password" class="text-sm text-blue-600 hover:underline">パスワードを忘れた場合</a>
+        </div>
     </form>
 </section>

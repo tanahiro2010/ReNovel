@@ -22,9 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 break;
             case 'delete_novel':
-
+                // 削除処理をここに追加
                 break;
-
             case 'edit_episode':
                 if (isset($_POST['title']) && isset($_POST['status']) && isset($_POST['text'])) {
                     $episode_id = $_SESSION['edit_episode_id'];
@@ -50,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('location: ./');
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
     echo_header($user_data);
-    echo '<main>';
+    echo '<main class="p-4">';
     if (isset($_GET['novel'])) {
         $novel_id = $_GET['novel'];
         $novel_data = $Novel->fetch_novel($novel_id);
@@ -62,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         ?>
-        <section class="control_novel">
-            <h2 class="section-title">小説: <?php echo $novel_data['title']; ?></h2>
+        <section class="control_novel mb-6">
+            <h2 class="text-2xl font-bold mb-2">小説: <?php echo $novel_data['title']; ?></h2>
             <div class="section-description">
                 <?php echo all_convert($novel_data['description']); ?>
             </div>
@@ -79,121 +78,95 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             }
 
-
             ?>
-
-            <section class="create-novel-form">
+            <section class="create-novel-form mb-6">
                 <form action="./" method="post" class="create-novel">
-                    <h2 class="section-title">エピソード: <?php echo $episode_data['title']; ?> 編集</h2>
+                    <h2 class="text-xl font-semibold mb-2">エピソード: <?php echo $episode_data['title']; ?> 編集</h2>
                     <input type="hidden" name="type" value="edit_episode" />
-                    <label class="create-novel-label">
+                    <label class="block mb-2">
                         エピソードタイトル:
-                        <input type="text" name="title" placeholder="タイトル" value="<?php echo $episode_data['title']; ?>" required />
-                    </label><br>
-
-                    <label class="create-novel-label">
+                        <input type="text" name="title" placeholder="タイトル" value="<?php echo $episode_data['title']; ?>" required class="border rounded p-2 w-full" />
+                    </label>
+                    <label class="block mb-2">
                         ステータス:
-                        <select name="status" required>
+                        <select name="status" required class="border rounded p-2 w-full">
                             <option value="public" <?php echo $episode_data['status'] == "public" ? "selected" : "" ?>>公開</option>
                             <option value="private" <?php echo $episode_data['status'] == "private" ? "selected" : "" ?>>非公開</option>
                         </select>
-                    </label><br>
-
-                    <label class="create-novel-label" for="text">本文</label>
-                    <textarea class="novel-text-form" name="text" placeholder="本文" required><?php echo $episode_data['text']; ?></textarea><br>
-
-                    <button type="submit" class="submit">更新</button>
+                    </label>
+                    <label class="block mb-2" for="text">本文</label>
+                    <textarea class="novel-text-form border rounded p-2 w-full" name="text" placeholder="本文" required><?php echo $episode_data['text']; ?></textarea>
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">更新</button>
                 </form>
                 <br>
-                <a href="/api/delete?type=episode&episode=<?php echo $episode_id; ?>&redirect_url=/dashboard/novel/edit?novel=<?php echo $novel_id; ?>" class="link-button">エピソードを削除</a>
+                <a href="/api/delete?type=episode&episode=<?php echo $episode_id; ?>&redirect_url=/dashboard/novel/edit?novel=<?php echo $novel_id; ?>" class="bg-red-500 text-white py-2 px-4 rounded">エピソードを削除</a>
             </section>
             <?php
-        } else {                       // エピソード選択モード ?>
-            <section class="edit-novel"> <!-- 小説の詳細を編集 -->
-                <h2 class="section-title">小説詳細編集</h2>
+        } else { // エピソード選択モード ?>
+            <section class="edit-novel mb-6"> <!-- 小説の詳細を編集 -->
+                <h2 class="text-xl font-semibold mb-2">小説詳細編集</h2>
                 <form class="edit-novel-content create-novel" action="./" method="post">
                     <input type="hidden" name="type" value="edit_novel">
 
-                    <label class="create-novel-label">
+                    <label class="block mb-2">
                         タイトル:
-                        <input type="text" name="title" value="<?php echo $novel_data['title']; ?>" required>
-                    </label><br>
-
-                    <label for="description">紹介文</label><br>
-                    <textarea name="description" class="novel-description"><?php echo $novel_data['description']; ?></textarea><br>
-
-                    <label class="create-novel-label">
+                        <input type="text" name="title" value="<?php echo $novel_data['title']; ?>" required class="border rounded p-2 w-full">
+                    </label>
+                    <label for="description" class="block mb-2">紹介文</label>
+                    <textarea name="description" class="novel-description border rounded p-2 w-full"><?php echo $novel_data['description']; ?></textarea>
+                    <label class="block mb-2">
                         ステータス:
-                        <select name="status">
+                        <select name="status" class="border rounded p-2 w-full">
                             <option value="public" <?php echo $novel_data['status'] == "public" ? "selected" : "" ?>>公開</option>
                             <option value="private" <?php echo $novel_data['status'] == "private" ? "selected" : "" ?>>非公開</option>
                         </select>
-                    </label><br>
-
+                    </label>
 
                     <?php if ($novel_data['type'] == 'short'): ?>
-
-                    <label for="text" class="create-novel-label">本文</label>
-                    <textarea name="text" placeholder="本文" class="novel-text-form" required><?php echo $novel_data['text']; ?></textarea>
-
+                        <label for="text" class="block mb-2">本文</label>
+                        <textarea name="text" placeholder="本文" class="novel-text-form border rounded p-2 w-full" required><?php echo $novel_data['text']; ?></textarea>
                     <?php endif; ?>
 
-                    <button type="submit" class="submit">更新</button><br>
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">更新</button>
                 </form>
             </section>
 
             <?php if ($novel_data['type'] == 'long'): ?>
-
-                <section class="select-episode">
-                    <h2>エピソードを選択</h2>
+                <section class="select-episode mb-6">
+                    <h2 class="text-xl font-semibold mb-2">エピソードを選択</h2>
                     <?php foreach ($novel_data['episodes'] as $episode_id):
-                    $episode_data = $Novel->fetch_episode($episode_id) ?? array(
-                        "title" => "読み込みエラー",
-                        "status" => "Error",
-                        "update_date" => "読み込みエラー"
-                    );
-                    ?>
-
-                    <div class="select-episode" onclick="location.href='./?novel=<?php echo $novel_id; ?>&episode=<?php echo $episode_id; ?>'">
-                        <div class="episode-title"><?php echo $episode_data['title']; ?></div>
-                        <div class="status">ステータス: <?php echo $episode_data['status'] == "public" ? "公開" : "非公開"; ?></div>
-                        <div class="last-update"><?php echo $episode_data['update_date']; ?></div>
-                    </div>
-
+                        $episode_data = $Novel->fetch_episode($episode_id) ?? array(
+                            "title" => "読み込みエラー",
+                            "status" => "Error",
+                            "update_date" => "読み込みエラー"
+                        );
+                        ?>
+                        <div class="select-episode cursor-pointer border-b py-2" onclick="location.href='./?novel=<?php echo $novel_id; ?>&episode=<?php echo $episode_id; ?>'">
+                            <div class="episode-title text-lg font-semibold"><?php echo $episode_data['title']; ?></div>
+                            <div class="status text-sm">ステータス: <?php echo $episode_data['status'] == "public" ? "公開" : "非公開"; ?></div>
+                            <div class="last-update text-sm text-gray-500"><?php echo $episode_data['update_date']; ?></div>
+                        </div>
                     <?php endforeach; ?>
 
-                    <section class="create-episode">
-                        <br>
-                        <a href="./create_episode" class="link-button">エピソードを新規作成</a>
+                    <section class="create-episode mt-4">
+                        <a href="./create_episode" class="bg-blue-500 text-white py-2 px-4 rounded">エピソードを新規作成</a>
                     </section>
                 </section>
-
-                <a href="/api/delete?type=novel&novel=<?php echo $novel_id; ?>&redirect_url=/dashboard/novel/edit" class="link-button">小説を削除</a>
+                <a href="/api/delete?type=novel&novel=<?php echo $novel_id; ?>&redirect_url=/dashboard/novel/edit" class="bg-red-500 text-white py-2 px-4 rounded">小説を削除</a>
             <?php endif;
         }
-
     } else { // 小説選択モード
         ?>
-        <section class="select-novel">
-            <h2 class="section-title">小説を選択</h2>
+        <section class="select-novel mb-6">
+            <h2 class="text-2xl font-bold mb-2">小説を選択</h2>
             <div class="list-novels">
                 <?php
                 foreach ($user_data['my_novel'] as $novel_id):
                     $novel_data = $Novel->fetch_novel($novel_id);
                     ?>
-                    <div class="novel-select" onclick="location.href = './?novel=<?php echo $novel_id; ?>'">
-                        <h3 class="novel-title-mini">
-                            <?php echo $novel_data['title']; ?>
-                        </h3>
-                        <div class="novel-description-mini">
-                            <div class="last-update-day"><?php echo $novel_data['last_update']; ?></div>
-                            <div class="novel-description-text">
-                                <?php echo substr($novel_data['description'], 0, 100); ?>
-                            </div>
-                            <div class="status-label">
-                                ステータス: <?php echo $novel_data['status']; ?>
-                            </div>
-                        </div>
+                    <div class="novel-select cursor-pointer border-b py-2" onclick="location.href = './?novel=<?php echo $novel_id; ?>'">
+                        <div class="novel-title text-lg font-semibold"><?php echo $novel_data['title']; ?></div>
+                        <div class="status text-sm">ステータス: <?php echo $novel_data['status'] == "public" ? "公開" : "非公開"; ?></div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -201,7 +174,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php
     }
     echo '</main>';
-} else {
-    header('HTTP/1.0 405 Method Not Allowed');
 }
-?>

@@ -17,10 +17,9 @@ class NovelManager
 
     public function create($title, $author, $genre, $description): ?Novel
     {
-        if ($this->exists(['id' => $id])) {
-            throw new Exception('Novel already exists.');
+        if ($this->exists(['author' => $author, 'title' => $title])) {
+            return null;
         }
-
         $data = [
             'id' => uniqid(),
             'title' => $title,
@@ -79,7 +78,7 @@ class NovelManager
     public function exists($data): bool
     {
         $idFilter = function ($callbackData) use ($data): bool {
-            if ($callbackData['id'] === $data['id']) {
+            if ($callbackData['author'] === $data['author'] || $callbackData['id'] === $data['id'] || $callbackData['title'] === $data['title']) {
                 return true;
             }
             return false;

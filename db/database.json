@@ -1,0 +1,16 @@
+{
+    "user": {
+        "tanahiro2010": {
+            "id": "tanahiro2010",
+            "name": "tanahiro2010",
+            "mail": "herentongkegu087@gmail.com",
+            "password": "$2y$10$7sH7gOYbWMWSoh2U2HcqnueN9bnNT2tq.OUptjnY7XCKqmoPzh74C",
+            "followers": [],
+            "following": [],
+            "my_novel": [],
+            "follow-novel": []
+        }
+    },
+    "novel": {},
+    "novel_text": {}
+}

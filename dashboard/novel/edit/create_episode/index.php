@@ -35,7 +35,7 @@ if ($novel_data) {
 echo_header($user_data);
 ?>
 
-<main class="p-4">
+<main class="p-4 text-center">
     <section class="control_novel mb-6">
         <h2 class="section-title text-2xl font-bold mb-2">
             小説: <a href="../?novel=<?php echo $novel_id; ?>" class="text-blue-600 hover:underline"><?php echo $novel_data['title']; ?></a>
@@ -49,12 +49,12 @@ echo_header($user_data);
         <h2 class="section-title text-xl font-semibold mb-2">新規エピソードを作成</h2>
         <form action="./" method="post" class="create-novel">
             <label class="block mb-2">
-                エピソードタイトル:
+                エピソードタイトル
                 <input type="text" name="title" placeholder="タイトル" value="第<?php echo count($novel_data['episodes']) + 1; ?>話" required class="border rounded p-2 w-full">
             </label>
 
             <label for="text" class="block mb-2">本文</label>
-            <textarea class="novel-text-form border rounded p-2 w-full" name="text" placeholder="本文" required></textarea>
+            <textarea class="novel-text-form border rounded p-2 w-full h-96" name="text" placeholder="本文" required></textarea>
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">作成</button>
         </form>
     </section>

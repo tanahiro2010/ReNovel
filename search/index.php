@@ -11,12 +11,31 @@ $user_data = $Account->isLogin();
 
 $novels = $Novel->get_novels();
 
+foreach ($novels as $novel_id => $novel_data) {
+    if ($novel_data['status'] == 'private') {
+        unset($novels[$novel_id]);
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET['q'])) {
         $query = all_convert($_GET['q']);
 
         foreach ($novels as $novel_id => $novel_data) {
-            if (!$query == $novel_id && !strpos($novel_data['title'], $_GET['q']) && !strpos($novel_data['description'], $_GET['q'])) {
+            $result = true;
+            if ($_GET['q'] == $novel_id) {
+                $result = false;
+            }
+
+            if (mb_strpos($novel_data['title'], $_GET['q']) !== false) {
+                $result = false;
+            }
+
+            if (mb_strpos($novel_data['description'], $_GET['q']) !== false) {
+                $result = false;
+            }
+
+            if ($result) {
                 unset($novels[$novel_id]);
             }
         }
@@ -31,17 +50,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 ?>
 
-<main class="p-4">
-    <section class="novel-search-form mb-6">
-        <h2 class="text-2xl font-bold">検索<?php echo $query; ?></h2>
-        <form action="./" method="get" class="flex items-center mt-4">
-            <label class="mr-2">
-                <span class="sr-only">検索:</span>
-                <input type="text" name="q" placeholder="検索" value="<?php echo $_GET['q'] ?? ''; ?>" required class="border border-gray-300 p-2 rounded-lg" />
-            </label>
+<main class="p-4 items-center text-center">
+    <section class="novel-search-form mb-6 text-center items-center justify-center flex grid-center">
+        <div>
+            <h2 class="text-2xl font-bold">検索<?php echo $query; ?></h2>
+            <form action="./" method="get" class="flex items-center mt-4">
+                <label class="mr-2">
+                    <span class="sr-only">検索:</span>
+                    <input type="text" name="q" placeholder="検索" value="<?php echo $_GET['q'] ?? ''; ?>" class="border border-gray-300 p-2 rounded-lg" />
+                </label>
 
-            <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">検索</button>
-        </form>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">検索</button>
+            </form>
+        </div>
     </section>
 
     <section class="novels">

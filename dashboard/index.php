@@ -48,7 +48,9 @@ echo_header($user_data);
                 $novel_data = $Novel->fetch_novel($novel_id);
                 ?>
                 <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg">
-                    <div class="text-gray-800 font-medium"><?php echo $novel_data['title']; ?></div>
+                    <div class="text-gray-800 font-medium cursor-pointer" onclick="location.href = '/novel?novel=<?php echo $novel_id; ?>';">
+                        <?php echo $novel_data['title']; ?>
+                    </div>
                     <a href="/api/follow?type=novel&novel=<?php echo $novel_id; ?>&redirect_url=<?php echo $location_url; ?>"
                        class="text-red-500 hover:underline">
                         フォロー解除

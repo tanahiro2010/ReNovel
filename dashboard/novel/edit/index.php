@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('location: ./');
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
     echo_header($user_data);
-    echo '<main class="p-4">';
+    echo '<main class="p-4 text-center">';
     if (isset($_GET['novel'])) {
         $novel_id = $_GET['novel'];
         $novel_data = $Novel->fetch_novel($novel_id);
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         ?>
         <section class="control_novel mb-6">
-            <h2 class="text-2xl font-bold mb-2">小説: <?php echo $novel_data['title']; ?></h2>
+            <h2 class="text-2xl font-bold mb-2">小説: <div onclick="location.href = './?novel=<?php echo $novel_id; ?>';"><?php echo $novel_data['title']; ?></div></h2>
             <div class="section-description">
                 <?php echo all_convert($novel_data['description']); ?>
             </div>
@@ -84,18 +84,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h2 class="text-xl font-semibold mb-2">エピソード: <?php echo $episode_data['title']; ?> 編集</h2>
                     <input type="hidden" name="type" value="edit_episode" />
                     <label class="block mb-2">
-                        エピソードタイトル:
+                        エピソードタイトル
                         <input type="text" name="title" placeholder="タイトル" value="<?php echo $episode_data['title']; ?>" required class="border rounded p-2 w-full" />
                     </label>
                     <label class="block mb-2">
-                        ステータス:
+                        ステータス
                         <select name="status" required class="border rounded p-2 w-full">
                             <option value="public" <?php echo $episode_data['status'] == "public" ? "selected" : "" ?>>公開</option>
                             <option value="private" <?php echo $episode_data['status'] == "private" ? "selected" : "" ?>>非公開</option>
                         </select>
                     </label>
                     <label class="block mb-2" for="text">本文</label>
-                    <textarea class="novel-text-form border rounded p-2 w-full" name="text" placeholder="本文" required><?php echo $episode_data['text']; ?></textarea>
+                    <textarea class="novel-text-form border rounded p-2 w-full h-96" name="text" placeholder="本文" required><?php echo $episode_data['text']; ?></textarea>
                     <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">更新</button>
                 </form>
                 <br>
@@ -157,14 +157,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } else { // 小説選択モード
         ?>
-        <section class="select-novel mb-6">
-            <h2 class="text-2xl font-bold mb-2">小説を選択</h2>
+        <section class="select-novel mb-6 items-center">
+            <h2 class="text-2xl font-bold mb-2 text-center">小説を選択</h2>
             <div class="list-novels">
                 <?php
                 foreach ($user_data['my_novel'] as $novel_id):
                     $novel_data = $Novel->fetch_novel($novel_id);
                     ?>
-                    <div class="novel-select cursor-pointer border-b py-2" onclick="location.href = './?novel=<?php echo $novel_id; ?>'">
+                    <div class="cursor-pointer border-b py-2 margin-5 text-center" onclick="location.href = './?novel=<?php echo $novel_id; ?>'">
                         <div class="novel-title text-lg font-semibold"><?php echo $novel_data['title']; ?></div>
                         <div class="status text-sm">ステータス: <?php echo $novel_data['status'] == "public" ? "公開" : "非公開"; ?></div>
                     </div>

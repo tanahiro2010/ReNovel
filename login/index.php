@@ -47,12 +47,17 @@ echo_header($user_data); // ヘッダー出力
 ?>
 
 <?php if ($error): ?>
-    <section class="error bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4">
-        <h2 class="error-title text-lg font-bold"><?php echo $error_title; ?></h2>
+    <br><br>
+    <!-- error mb-4 p-4 border border-red-500 bg-red-100 text-red-700 rounded -->
+    <section class=" p-6 max-w-md mx-auto bg-red-100 border-white-500 shadow-md rounded"> <!-- ここ背景赤色にしたい -->
+        <h2 class="error-title font-bold"><?php echo $error_title; ?></h2>
         <div class="error-description"><?php echo $error_content; ?></div>
-        <button class="error-close mt-2 text-red-500" onclick="this.parentElement.style.display='none';">×</button>
+        <button class="error-close mt-2 text-red-600 hover:text-red-800" onclick="this.parentElement.style.display='none';">×</button>
     </section>
 <?php endif; ?>
+
+<br>
+<br>
 
 <section class="login-box p-6 max-w-md mx-auto bg-white shadow-md rounded">
     <form action="./" method="post" class="login-form">

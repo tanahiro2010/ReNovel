@@ -566,6 +566,11 @@ class Novel
             $this->save($database);
             $this->Account->deleteArrayFromValue($novel_data['author_id'], 'my_novel', $novel_id);
 
+            $followers = $novel_data['followers'];
+            foreach ($followers as $follower) {
+                $this->Account->deleteArrayFromValue($follower, 'follow-novel', $novel_id);
+            }
+
             return true;
         }
 
